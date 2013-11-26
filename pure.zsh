@@ -64,14 +64,20 @@ prompt_pure_string_length() {
 	echo ${#${(S%%)1//(\%([KF1]|)\{*\}|\%[Bbkf])}}
 }
 
+prompt_pure_print_exit_code() {
+	print -Pn '%(?..%F{red}[%?])'
+}
+
 prompt_pure_precmd() {
+	local prompt_pure_exit_code=`prompt_pure_print_exit_code`
+
 	# shows the full path in the title
 	print -Pn '\e]0;%~\a'
 
 	# git info
 	vcs_info
 
-	local prompt_pure_preprompt="\n%F{blue}%~%F{242}$vcs_info_msg_0_`prompt_pure_git_dirty` $prompt_pure_username%f %F{yellow}`prompt_pure_cmd_exec_time`%f"
+	local prompt_pure_preprompt="\n%F{blue}%~%F{242}$vcs_info_msg_0_`prompt_pure_git_dirty` $prompt_pure_username%f %F{yellow}`prompt_pure_cmd_exec_time` $prompt_pure_exit_code%f"
 	print -P $prompt_pure_preprompt
 
 	# check async if there is anything to pull
