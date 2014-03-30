@@ -70,6 +70,8 @@ prompt_pure_print_exit_code() {
 
 prompt_pure_precmd() {
 	local prompt_pure_exit_code=`prompt_pure_print_exit_code`
+        # Print a horizontal line via 'hr' (https://github.com/LuRsT/hr)
+        hr '-'
 
 	# shows the full path in the title
 	print -Pn '\e]0;%~\a'
@@ -77,7 +79,7 @@ prompt_pure_precmd() {
 	# git info
 	vcs_info
 
-	local prompt_pure_preprompt="\n%F{blue}%~%F{242}$vcs_info_msg_0_`prompt_pure_git_dirty` $prompt_pure_username%f %F{yellow}`prompt_pure_cmd_exec_time` $prompt_pure_exit_code%f"
+	local prompt_pure_preprompt="%F{blue}%~%F{242}$vcs_info_msg_0_`prompt_pure_git_dirty` $prompt_pure_username%f %F{yellow}`prompt_pure_cmd_exec_time` $prompt_pure_exit_code%f"
 	print -P $prompt_pure_preprompt
 
 	# check async if there is anything to pull
